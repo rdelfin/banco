@@ -3,5 +3,8 @@ name = "banco_interfaces"
 version = "0.1.0"
 edition = "2021"
 
+[dependencies]
+tarpc = { version = "0.27", features = ["tokio1"] }
+
 [build-dependencies]
 prost-build = "0.9.0"
