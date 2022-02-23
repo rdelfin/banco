@@ -2,7 +2,11 @@
 //! communicate to other components over IPC.
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, path::PathBuf};
+
+mod error;
+
+pub use crate::error::{Error, Result};
 
 /// This interface is used to talk to Teller, the broker and manager for all nodes and topics.
 #[tarpc::service]
@@ -11,7 +15,7 @@ pub trait Teller {
     async fn list_nodes() -> ListNodesResponse;
     /// Request teller to start a node. It will create a process, and return once the `fork`
     /// succeeeded.
-    async fn start_node(node: Node);
+    async fn start_node(node: Node) -> Result;
 
     /// Endpoint used for the nodes to heartbeat back to teller.
     async fn heartbeat(node_name: String);
@@ -30,7 +34,7 @@ pub struct Node {
     /// The registered name of the node. It will remain consistent throughout a run.
     pub name: String,
     /// The path to the executable used for the binary.
-    pub executable_path: String,
+    pub executable_path: PathBuf,
     /// The status the node is in (e.g. running, stopped).
     pub status: NodeStatus,
 }
@@ -40,9 +44,9 @@ pub struct Node {
 pub enum NodeStatus {
     /// Used once the node has been created, it is identified as alive, but hasn't finished its
     /// internally-defined initialisation.
-    INITIALISING,
+    Initialising,
     /// Used once the node is running and in a good state
-    RUNNING,
+    Running,
     /// Used for when a node is no longer running, be it intentionally or after a crash.
-    STOPPED { crashed: bool },
+    Stopped { crashed: bool },
 }
