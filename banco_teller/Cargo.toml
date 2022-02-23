@@ -1,8 +1,5 @@
-[workspace]
-members = ["banco_teller", "banco_interfaces"]
-
 [package]
-name = "banco"
+name = "banco_teller"
 version = "0.1.0"
 edition = "2021"
 
