@@ -1,6 +1,7 @@
 //! This module exposes all the interfaces used by banco, both from nodes, and teller. Use these to
 //! communicate to other components over IPC.
 
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 /// This interface is used to talk to Teller, the broker and manager for all nodes and topics.
@@ -17,14 +18,14 @@ pub trait Teller {
 }
 
 /// Response to listing of all nodes
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ListNodesResponse {
     /// Hashmap of said nodes
     pub nodes: HashMap<String, Node>,
 }
 
 /// A representation of the current state of a node from the view of Teller
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Node {
     /// The registered name of the node. It will remain consistent throughout a run.
     pub name: String,
@@ -35,7 +36,7 @@ pub struct Node {
 }
 
 /// Enum representing the current state of a node.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum NodeStatus {
     /// Used once the node has been created, it is identified as alive, but hasn't finished its
     /// internally-defined initialisation.
