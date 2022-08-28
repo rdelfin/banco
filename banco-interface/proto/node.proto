@@ -1,20 +1,23 @@
 syntax = "proto3";
 
+package banco.node;
+
 service Node {
-  rpc Status (StatusRequest) returns (StatusReply) {}
+  rpc Status (StatusRequest) returns (StatusResponse) {}
 }
 
 enum NodeStatus {
-  UNKNOWN = 0;
-  INITIALISING = 1;
-  RUNNING = 2;
-  STOPPED = 3;
+  NODE_STATUS_UNKNOWN = 0;
+  NODE_STATUS_INITIALISING = 1;
+  NODE_STATUS_RUNNING = 2;
+  NODE_STATUS_STOPPED = 3;
 }
 
 message StatusRequest {
+string name = 1;
 }
 
-message StatusReply {
+message StatusResponse {
   string name = 1;
   NodeStatus status = 2;
 }
