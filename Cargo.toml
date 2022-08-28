@@ -1,0 +1,7 @@
+[workspace]
+
+members = [
+    "banco-broker",
+    "bancolib",
+    "banco-interface",
+]
