@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service Node {
+  rpc Status (StatusRequest) returns (StatusReply) {}
+}
+
+enum NodeStatus {
+  UNKNOWN = 0;
+  INITIALISING = 1;
+  RUNNING = 2;
+  STOPPED = 3;
+}
+
+message StatusRequest {
+}
+
+message StatusReply {
+  string name = 1;
+  NodeStatus status = 2;
+}
