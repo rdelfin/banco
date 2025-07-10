@@ -1,8 +1,8 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
+use banco_interface::node::{
+    node_server::{Node, NodeServer},
+    NodeStatus, StatusRequest, StatusResponse,
+};
+
+pub trait NodeInterface {
+    fn is_ok() -> bool;
 }
